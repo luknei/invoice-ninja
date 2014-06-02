@@ -2,39 +2,6 @@
 
 
 /*
-require_once 'google/appengine/api/app_identity/AppIdentityService.php';
-use \google\appengine\api\app_identity\AppIdentityService;
-
-// Define the gethostname function if it does not exist
-if (!function_exists('gethostname')) {
-    function gethostname() {
-        return AppIdentityService::getApplicationId();
-    }
-}    
-*/
-
-/*
-$app->instance('path.storage','gs://invoice-ninja');
-$app->instance('path.manifest', 'gs://invoice-ninja/meta');
-
-if(strlen(ini_get('google_app_engine.allow_include_gs_buckets'))) {
-        $primary_bucket_name = explode(', ', ini_get('google_app_engine.allow_include_gs_buckets'))[0];
-        dd($primary_bucket_name);
-        $app->instance('path.storage','gs://'.$primary_bucket_name);
-        $app->instance('path.manifest', storage_path().'/meta');
-}
-*/
-
-
-
-if (!function_exists('gethostname')) {
-    function gethostname() {
-        return php_uname('n');
-    }
-}
-
-
-/*
 |--------------------------------------------------------------------------
 | Create The Application
 |--------------------------------------------------------------------------
@@ -47,7 +14,6 @@ if (!function_exists('gethostname')) {
 
 $app = new Illuminate\Foundation\Application;
 
-//$app->redirectIfTrailingSlash();
 
 /*
 |--------------------------------------------------------------------------
@@ -60,32 +26,9 @@ $app = new Illuminate\Foundation\Application;
 |
 */
 
-
-$env = $app->detectEnvironment(function ()
-{
-    if (file_exists(__DIR__.'/environment.php'))
-    {
-        return require __DIR__.'/environment.php';
-    }
-    else if (isset($_SERVER['LARAVEL_ENV']))
-    {
-        return $_SERVER['LARAVEL_ENV'];
-    }
-    else
-    {
-        return 'development';
-    }
-});
-
-
-/*
 $env = $app->detectEnvironment(array(
-	'development' => ['precise64', 'ubuntu-server-12042-x64-vbox4210'],
-	'gae-development' => ['HILLEL-PC','hillel-PC'],
-	'gae-production' => ['GNU/Linux'],
-    'fortrabbit' => ['instance-zudx3h.nodes.eu1.frbit.com']
+    'development' => array('laravel'),
 ));
-*/
 
 /*
 |--------------------------------------------------------------------------
