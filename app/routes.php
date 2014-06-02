@@ -11,8 +11,6 @@
 |
 */
 
-var_dump(App::getLocale());
-
 Route::get('/', 'HomeController@showWelcome');
 Route::get('/rocksteady', 'HomeController@showWelcome');
 Route::get('/about', 'HomeController@showAboutUs');
