@@ -60,7 +60,7 @@ App::error(function(Exception $exception, $code)
 {
 	//Log::error($exception);
 
-	Utils::logError($exception . ' ' . $code);
+//	Utils::logError($exception . ' ' . $code);
 });
 
 /*

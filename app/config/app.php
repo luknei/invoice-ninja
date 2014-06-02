@@ -52,7 +52,7 @@ return array(
 	|
 	*/
 
-	'locale' => 'en',
+	'locale' => 'de',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -117,10 +117,10 @@ return array(
 		'Bootstrapper\BootstrapperServiceProvider',
 		'Zizaco\Confide\ConfideServiceProvider',
 		'Former\FormerServiceProvider',
-		'Barryvdh\Debugbar\ServiceProvider',
 		'Chumper\Datatable\DatatableServiceProvider',
 		'Intervention\Image\ImageServiceProvider',
-		'Webpatser\Countries\CountriesServiceProvider'
+		'Webpatser\Countries\CountriesServiceProvider',
+//        'Barryvdh\Debugbar\ServiceProvider',
 	),
 
 	/*
@@ -170,7 +170,7 @@ return array(
 		'Lang'            => 'Illuminate\Support\Facades\Lang',
 		'Log'             => 'Illuminate\Support\Facades\Log',
 		'Mail'            => 'Illuminate\Support\Facades\Mail',
-		'Paginator'       => 'Illuminate\Support\Facades\Paginator',
+//		'Paginator'       => 'Illuminate\Support\Facades\Paginator',
 		'Password'        => 'Illuminate\Support\Facades\Password',
 		'Queue'           => 'Illuminate\Support\Facades\Queue',
 		'Redirect'        => 'Illuminate\Support\Facades\Redirect',
@@ -185,7 +185,7 @@ return array(
 		'URL'             => 'Illuminate\Support\Facades\URL',
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
-		'SSH' 			      => 'Illuminate\Support\Facades\SSH',
+		'SSH' 			  => 'Illuminate\Support\Facades\SSH',
 		'Alert'           => 'Bootstrapper\Alert',
 		'Badge'           => 'Bootstrapper\Badge',
 		'Breadcrumb'      => 'Bootstrapper\Breadcrumb',
@@ -197,7 +197,7 @@ return array(
 		'Form'            => 'Bootstrapper\Form',
 		'Helpers'         => 'Bootstrapper\Helpers',
 		'Icon'            => 'Bootstrapper\Icon',
-		'Image'           => 'Bootstrapper\Image',
+//		'Image'           => 'Bootstrapper\Image',
 		'Label'           => 'Bootstrapper\Label',
 		'MediaObject'     => 'Bootstrapper\MediaObject',
 		'Navbar'          => 'Bootstrapper\Navbar',
@@ -209,7 +209,7 @@ return array(
 		'Thumbnail'       => 'Bootstrapper\Thumbnail',
 		'Typeahead'       => 'Bootstrapper\Typeahead',
 		'Typography'      => 'Bootstrapper\Typography',
-		'Confide'    	    => 'Zizaco\Confide\ConfideFacade',
+		'Confide'    	  => 'Zizaco\Confide\ConfideFacade',
 		'Former'          => 'Former\Facades\Former',
 		'Datatable'       => 'Chumper\Datatable\Facades\DatatableFacade',
 		'Omnipay'         => 'Omnipay\Omnipay',

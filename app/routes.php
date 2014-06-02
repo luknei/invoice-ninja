@@ -11,16 +11,7 @@
 |
 */
 
-//apc_clear_cache();
-//Cache::flush();
-
-//dd(DB::getQueryLog());
-//dd(Client::getPrivateId(1));
-//dd(new DateTime());
-//Event::fire('user.signup');
-//dd(App::environment());
-//dd(gethostname());
-//Log::error('test');
+var_dump(App::getLocale());
 
 Route::get('/', 'HomeController@showWelcome');
 Route::get('/rocksteady', 'HomeController@showWelcome');
@@ -56,73 +47,75 @@ Route::post('user/reset', 'UserController@do_reset_password');
 Route::get('logout', 'UserController@logout');
 
 
-Route::group(array('before' => 'auth'), function()
-{   
-	Route::get('dashboard', 'DashboardController@index');
-  Route::get('view_archive/{entity_type}/{visible}', 'AccountController@setTrashVisible');
-  Route::get('force_inline_pdf', 'UserController@forcePDFJS');
-  
-  Route::get('api/products', array('as'=>'api.products', 'uses'=>'ProductController@getDatatable'));
-  Route::resource('products', 'ProductController');
-  Route::get('products/{product_id}/archive', 'ProductController@archive');
+Route::group(array('before' => 'auth'), function () {
+    Route::get('dashboard', 'DashboardController@index');
+    Route::get('view_archive/{entity_type}/{visible}', 'AccountController@setTrashVisible');
+    Route::get('force_inline_pdf', 'UserController@forcePDFJS');
 
-  /*
-  Route::get('company/products/{product_id}/edit', 'ProductController@showProduct');
-  Route::get('company/products/{product_id}/archive', 'ProductController@archiveProduct');
-  Route::get('company/products/create', 'ProductController@createProduct');
-  Route::post('company/products/{product_id?}', 'AccountController@saveProduct');
-  */
+    Route::get('api/products', array('as' => 'api.products', 'uses' => 'ProductController@getDatatable'));
+    Route::resource('products', 'ProductController');
+    Route::get('products/{product_id}/archive', 'ProductController@archive');
 
-  Route::get('company/advanced_settings/chart_builder', 'ReportController@report');
-  Route::post('company/advanced_settings/chart_builder', 'ReportController@report');
+    /*
+    Route::get('company/products/{product_id}/edit', 'ProductController@showProduct');
+    Route::get('company/products/{product_id}/archive', 'ProductController@archiveProduct');
+    Route::get('company/products/create', 'ProductController@createProduct');
+    Route::post('company/products/{product_id?}', 'AccountController@saveProduct');
+    */
 
-	Route::get('account/getSearchData', array('as' => 'getSearchData', 'uses' => 'AccountController@getSearchData'));
-  Route::get('company/{section?}/{sub_section?}', 'AccountController@showSection');	
-	Route::post('company/{section?}/{sub_section?}', 'AccountController@doSection');
-	Route::post('user/setTheme', 'UserController@setTheme');
-  Route::post('remove_logo', 'AccountController@removeLogo');
-  Route::post('account/go_pro', 'AccountController@enableProPlan');
+    Route::get('company/advanced_settings/chart_builder', 'ReportController@report');
+    Route::post('company/advanced_settings/chart_builder', 'ReportController@report');
 
-	Route::resource('clients', 'ClientController');
-	Route::get('api/clients', array('as'=>'api.clients', 'uses'=>'ClientController@getDatatable'));
-	Route::get('api/activities/{client_id?}', array('as'=>'api.activities', 'uses'=>'ActivityController@getDatatable'));	
-	Route::post('clients/bulk', 'ClientController@bulk');
+    Route::get('account/getSearchData', array('as' => 'getSearchData', 'uses' => 'AccountController@getSearchData'));
+    Route::get('company/{section?}/{sub_section?}', 'AccountController@showSection');
+    Route::post('company/{section?}/{sub_section?}', 'AccountController@doSection');
+    Route::post('user/setTheme', 'UserController@setTheme');
+    Route::post('remove_logo', 'AccountController@removeLogo');
+    Route::post('account/go_pro', 'AccountController@enableProPlan');
 
-	Route::get('recurring_invoices', 'InvoiceController@recurringIndex');
-	Route::get('api/recurring_invoices/{client_id?}', array('as'=>'api.recurring_invoices', 'uses'=>'InvoiceController@getRecurringDatatable'));	
+    Route::resource('clients', 'ClientController');
+    Route::get('api/clients', array('as' => 'api.clients', 'uses' => 'ClientController@getDatatable'));
+    Route::get('api/activities/{client_id?}', array('as' => 'api.activities', 'uses' => 'ActivityController@getDatatable'));
+    Route::post('clients/bulk', 'ClientController@bulk');
 
-  Route::resource('invoices', 'InvoiceController');
-  Route::get('api/invoices/{client_id?}', array('as'=>'api.invoices', 'uses'=>'InvoiceController@getDatatable')); 
-  Route::get('invoices/create/{client_id?}', 'InvoiceController@create');
-  Route::get('invoices/{public_id}/clone', 'InvoiceController@cloneInvoice');
-  Route::post('invoices/bulk', 'InvoiceController@bulk');
+    Route::get('recurring_invoices', 'InvoiceController@recurringIndex');
+    Route::get('api/recurring_invoices/{client_id?}', array('as' => 'api.recurring_invoices', 'uses' => 'InvoiceController@getRecurringDatatable'));
 
-  Route::get('quotes/create/{client_id?}', 'QuoteController@create');
-  Route::get('quotes/{public_id}/clone', 'InvoiceController@cloneInvoice');
-  Route::get('quotes/{public_id}/edit', 'InvoiceController@edit');
-  Route::put('quotes/{public_id}', 'InvoiceController@update');
-  Route::get('quotes/{public_id}', 'InvoiceController@edit');
-  Route::post('quotes', 'InvoiceController@store');
-  Route::get('quotes', 'QuoteController@index');
-  Route::get('api/quotes/{client_id?}', array('as'=>'api.quotes', 'uses'=>'QuoteController@getDatatable'));   
-  Route::post('quotes/bulk', 'QuoteController@bulk');
+    Route::resource('invoices', 'InvoiceController');
+    Route::get('api/invoices/{client_id?}', array('as' => 'api.invoices', 'uses' => 'InvoiceController@getDatatable'));
+    Route::get('invoices/create/{client_id?}', 'InvoiceController@create');
+    Route::get('invoices/{public_id}/clone', 'InvoiceController@cloneInvoice');
+    Route::post('invoices/bulk', 'InvoiceController@bulk');
 
-	Route::get('payments/{id}/edit', function() { return View::make('header'); });
-	Route::resource('payments', 'PaymentController');
-	Route::get('payments/create/{client_id?}/{invoice_id?}', 'PaymentController@create');
-	Route::get('api/payments/{client_id?}', array('as'=>'api.payments', 'uses'=>'PaymentController@getDatatable'));
-	Route::post('payments/bulk', 'PaymentController@bulk');
-	
-	Route::get('credits/{id}/edit', function() { return View::make('header'); });
-	Route::resource('credits', 'CreditController');
-	Route::get('credits/create/{client_id?}/{invoice_id?}', 'CreditController@create');
-	Route::get('api/credits/{client_id?}', array('as'=>'api.credits', 'uses'=>'CreditController@getDatatable'));	
-	Route::post('credits/bulk', 'CreditController@bulk');	
+    Route::get('quotes/create/{client_id?}', 'QuoteController@create');
+    Route::get('quotes/{public_id}/clone', 'InvoiceController@cloneInvoice');
+    Route::get('quotes/{public_id}/edit', 'InvoiceController@edit');
+    Route::put('quotes/{public_id}', 'InvoiceController@update');
+    Route::get('quotes/{public_id}', 'InvoiceController@edit');
+    Route::post('quotes', 'InvoiceController@store');
+    Route::get('quotes', 'QuoteController@index');
+    Route::get('api/quotes/{client_id?}', array('as' => 'api.quotes', 'uses' => 'QuoteController@getDatatable'));
+    Route::post('quotes/bulk', 'QuoteController@bulk');
+
+    Route::get('payments/{id}/edit', function () {
+            return View::make('header');
+        });
+    Route::resource('payments', 'PaymentController');
+    Route::get('payments/create/{client_id?}/{invoice_id?}', 'PaymentController@create');
+    Route::get('api/payments/{client_id?}', array('as' => 'api.payments', 'uses' => 'PaymentController@getDatatable'));
+    Route::post('payments/bulk', 'PaymentController@bulk');
+
+    Route::get('credits/{id}/edit', function () {
+            return View::make('header');
+        });
+    Route::resource('credits', 'CreditController');
+    Route::get('credits/create/{client_id?}/{invoice_id?}', 'CreditController@create');
+    Route::get('api/credits/{client_id?}', array('as' => 'api.credits', 'uses' => 'CreditController@getDatatable'));
+    Route::post('credits/bulk', 'CreditController@bulk');
 });
 
 // Route group for API versioning
-Route::group(array('prefix' => 'api/v1', 'before' => 'auth.basic'), function()
-{
+Route::group(array('prefix' => 'api/v1', 'before' => 'auth.basic'), function () {
     Route::resource('clients', 'ClientApiController');
 });
 
@@ -228,102 +221,91 @@ define('GATEWAY_QUICKBOOKS', 35);
 */
 
 
-
-HTML::macro('nav_link', function($url, $text, $url2 = '', $extra = '') {
-    $class = ( Request::is($url) || Request::is($url.'/*') || Request::is($url2) ) ? ' class="active"' : '';
+HTML::macro('nav_link', function ($url, $text, $url2 = '', $extra = '') {
+    $class = (Request::is($url) || Request::is($url . '/*') || Request::is($url2)) ? ' class="active"' : '';
     $title = ucwords(trans("texts.$text")) . Utils::getProLabel($text);
-    return '<li'.$class.'><a href="'.URL::to($url).'" '.$extra.'>'.$title.'</a></li>';
+    return '<li' . $class . '><a href="' . URL::to($url) . '" ' . $extra . '>' . $title . '</a></li>';
 });
 
-HTML::macro('tab_link', function($url, $text, $active = false) {
+HTML::macro('tab_link', function ($url, $text, $active = false) {
     $class = $active ? ' class="active"' : '';
-    return '<li'.$class.'><a href="'.URL::to($url).'" data-toggle="tab">'.$text.'</a></li>';
+    return '<li' . $class . '><a href="' . URL::to($url) . '" data-toggle="tab">' . $text . '</a></li>';
 });
 
-HTML::macro('menu_link', function($type) {
-  $types = $type.'s';
-  $Type = ucfirst($type);
-  $Types = ucfirst($types);
-  $class = ( Request::is($types) || Request::is('*'.$type.'*')) && !Request::is('*advanced_settings*') ? ' active' : '';
+HTML::macro('menu_link', function ($type) {
+    $types = $type . 's';
+    $class = (Request::is($types) || Request::is('*' . $type . '*')) && !Request::is('*advanced_settings*') ? ' active' : '';
 
-  return '<li class="dropdown '.$class.'">
-           <a href="'.URL::to($types).'" class="dropdown-toggle">'.trans("texts.$types").'</a>
+    return '<li class="dropdown ' . $class . '">
+           <a href="' . URL::to($types) . '" class="dropdown-toggle">' . trans("texts.$types") . '</a>
            <ul class="dropdown-menu" id="menu1">
-             <li><a href="'.URL::to($types.'/create').'">'.trans("texts.new_$type").'</a></li>
+             <li><a href="' . URL::to($types . '/create') . '">' . trans("texts.new_$type") . '</a></li>
             </ul>
           </li>';
 });
 
-HTML::macro('image_data', function($imagePath) {
-  return 'data:image/jpeg;base64,' . base64_encode(file_get_contents($imagePath));
+HTML::macro('image_data', function ($imagePath) {
+    return 'data:image/jpeg;base64,' . base64_encode(file_get_contents($imagePath));
 });
 
 
-HTML::macro('breadcrumbs', function() {
-  $str = '<ol class="breadcrumb">';
+HTML::macro('breadcrumbs', function () {
+    $str = '<ol class="breadcrumb">';
 
-  // Get the breadcrumbs by exploding the current path.
-  $basePath = Utils::basePath();
-  $parts = explode('?', $_SERVER['REQUEST_URI']);
-  $path = $parts[0];
-  
-  if ($basePath != '/')
-  {
-    $path = str_replace($basePath, '', $path);
-  }
-  $crumbs = explode('/', $path);
+    // Get the breadcrumbs by exploding the current path.
+    $basePath = Utils::basePath();
+    $parts = explode('?', $_SERVER['REQUEST_URI']);
+    $path = $parts[0];
 
-  foreach ($crumbs as $key => $val)
-  {
-    if (is_numeric($val))
-    {
-      unset($crumbs[$key]);
+    if ($basePath != '/') {
+        $path = str_replace($basePath, '', $path);
     }
-  }
+    $crumbs = explode('/', $path);
 
-  $crumbs = array_values($crumbs);
-  for ($i=0; $i<count($crumbs); $i++) {
-    $crumb = trim($crumbs[$i]);
-    if (!$crumb) continue;
-    if ($crumb == 'company') return '';
-    $name = trans("texts.$crumb");
-    if ($i==count($crumbs)-1) 
-    {
-      $str .= "<li class='active'>$name</li>";  
+    foreach ($crumbs as $key => $val) {
+        if (is_numeric($val)) {
+            unset($crumbs[$key]);
+        }
     }
-    else
-    {
-      $str .= '<li>'.link_to($crumb, $name).'</li>';   
+
+    $crumbs = array_values($crumbs);
+    for ($i = 0; $i < count($crumbs); $i++) {
+        $crumb = trim($crumbs[$i]);
+        if (!$crumb) continue;
+        if ($crumb == 'company') return '';
+        $name = trans("texts.$crumb");
+        if ($i == count($crumbs) - 1) {
+            $str .= "<li class='active'>$name</li>";
+        } else {
+            $str .= '<li>' . link_to($crumb, $name) . '</li>';
+        }
     }
-  }
-  return $str . '</ol>';
+    return $str . '</ol>';
 });
 
 function uctrans($text)
 {
-  return ucwords(trans($text));
+    return ucwords(trans($text));
 }
 
 
-if (Auth::check() && !Session::has(SESSION_TIMEZONE)) 
-{
-	Event::fire('user.refresh');
-}
+//if (Auth::check() && !Session::has(SESSION_TIMEZONE))
+//{
+//	Event::fire('user.refresh');
+//}
 
-Validator::extend('positive', function($attribute, $value, $parameters)
-{
+Validator::extend('positive', function ($attribute, $value, $parameters) {
     return Utils::parseFloat($value) > 0;
 });
 
-Validator::extend('has_credit', function($attribute, $value, $parameters)
-{
-	$publicClientId = $parameters[0];
-	$amount = $parameters[1];
-	
-	$client = Client::scope($publicClientId)->firstOrFail();
-	$credit = $client->getTotalCredit();
-  
-  return $credit >= $amount;
+Validator::extend('has_credit', function ($attribute, $value, $parameters) {
+    $publicClientId = $parameters[0];
+    $amount = $parameters[1];
+
+    $client = Client::scope($publicClientId)->firstOrFail();
+    $credit = $client->getTotalCredit();
+
+    return $credit >= $amount;
 });
 
 
@@ -334,20 +316,20 @@ Event::listen('illuminate.query', function($query, $bindings, $time, $name)
 
     // Format binding data for sql insertion
     foreach ($bindings as $i => $binding)
-    {   
+    {
         if ($binding instanceof \DateTime)
-        {   
+        {
             $bindings[$i] = $binding->format('\'Y-m-d H:i:s\'');
         }
         else if (is_string($binding))
-        {   
+        {
             $bindings[$i] = "'$binding'";
-        }   
-    }       
+        }
+    }
 
     // Insert bindings into query
     $query = str_replace(array('%', '?'), array('%%', '%s'), $query);
-    $query = vsprintf($query, $bindings); 
+    $query = vsprintf($query, $bindings);
 
     Log::info($query, $data);
 });
