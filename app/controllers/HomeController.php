@@ -1,5 +1,6 @@
 <?php
 
+<<<<<<< HEAD
 use ninja\mailers\Mailer;
 
 class HomeController extends BaseController {

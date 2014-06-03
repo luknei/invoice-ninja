@@ -10,7 +10,7 @@
 		}
 	],	
 	"require": {
-		"laravel/framework": "4.1.*",
+		"laravel/framework": "4.2.*",
 		"patricktalmadge/bootstrapper": "dev-develop",
 		"zizaco/confide": "3.1.x",
 		"anahkiasen/former": "dev-master",
@@ -43,8 +43,8 @@
 	},
 	"scripts": {
 		"post-install-cmd": [
-			"php artisan optimize",
-			"php artisan debugbar:publish"
+			"php artisan clear-compiled",
+			"php artisan optimize"
 		],
 		"post-update-cmd": [
 			"php artisan clear-compiled",
@@ -57,5 +57,5 @@
 	"config": {
 		"preferred-install": "dist"
 	},
-	"minimum-stability": "dev"
+	"minimum-stability": "stable"
 }

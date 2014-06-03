@@ -29,19 +29,11 @@ ClassLoader::addDirectories(array(
 |
 | Here we will configure the error logger setup for the application which
 | is built on top of the wonderful Monolog library. By default we will
-| build a rotating log file setup which creates a new file each day.
+| build a basic log file setup which creates a single file for logs.
 |
 */
 
 Log::useFiles(storage_path().'/logs/laravel.log');
-
-
-/*
-use Monolog\Logger;
-$monolog = Log::getMonolog();
-$monolog->pushHandler(new Monolog\Handler\SyslogHandler('intranet', 'user', Logger::DEBUG, false, LOG_PID));
-*/
-
 
 /*
 |--------------------------------------------------------------------------
@@ -58,9 +50,7 @@ $monolog->pushHandler(new Monolog\Handler\SyslogHandler('intranet', 'user', Logg
 
 App::error(function(Exception $exception, $code)
 {
-	//Log::error($exception);
-
-//	Utils::logError($exception . ' ' . $code);
+	Log::error($exception);
 });
 
 /*
@@ -70,7 +60,7 @@ App::error(function(Exception $exception, $code)
 |
 | The "down" Artisan command gives you the ability to put an application
 | into maintenance mode. Here, you will define what is displayed back
-| to the user if maintenace mode is in effect for this application.
+| to the user if maintenance mode is in effect for the application.
 |
 */
 
@@ -78,7 +68,6 @@ App::down(function()
 {
 	return Response::make("Be right back!", 503);
 });
-
 
 
 Event::subscribe('UserEventHandler');
